@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <title>Devlopor Job Requirements Analzer</title>
+    </head>
+    <body>
+
+        <header>
+            <div class="ui inverted vertical masthead center aligned segment">
+                <div class="ui text container">
+                    <h1 class="ui inverted header">Job Requirements Analzer</h1>
+                    <h3 class="ui inverted disabled header">We analyze the current job postings and inform you of the technology stacks that companies are looking for.</h3>
+                </div>
+            </div>
+        </header>
+
+        <section>
+            <div id="big_seg" class="ui segment">
+                <h2 class="ui header">
+                        <i class="settings icon"></i>
+                        <div class="content">
+                            1. 자격 요건 통계
+                            <div class="sub header">N개 채용공고에서 추출된 X개의 자격 요건에 관한 단어 통계.</div>
+                        </div>
+                </h2>
+                <div class="ui internally celled two column grid">
+                    <div class="column">
+                        {{ var_chart1|safe }}
+                    </div>
+                    <div class="column">
+                        <img id="word_cloud1" src="{{ word_cloud1 }}" alt="">
+                    </div>
+                </div>
+
+                <div class="ui divider"></div>
+
+                <h2 class="ui header">
+                        <i class="settings icon"></i>
+                        <div class="content">
+                            2. 우대 요건 통계
+                            <div class="sub header">N개 채용공고에서 추출된 X라인의 우대 요건에서 동시 출연한 단어 통계</div>
+                        </div>
+                </h2>
+                <div class="ui internally celled two column grid">
+                    <div class="column">
+                        {{ var_chart2|safe }}
+                    </div>
+                    <div class="column">
+                        <img id="word_cloud2" src="{{ word_cloud2 }}" alt="">
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+            </div>
+        </section>
+
+    </body>
+    <script>
+
+    </script>
+    <style type="text/css">
+        body {
+
+        }
+        h1.ui.inverted.header {
+            margin-top: 5rem;
+        }
+        div div.ui.container {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+        body > header > div {
+            height: 20rem;
+        }
+        #table1 {
+            text-align: center;
+            margin: auto;
+        }
+        h2.ui.header {
+            margin-left: 5rem;
+        }
+        img#word_cloud1 {
+            height:100%;
+            width:100%
+        }
+        img#word_cloud2 {
+            height:100%;
+            width:100%
+        }
+    </style>
+</html>
