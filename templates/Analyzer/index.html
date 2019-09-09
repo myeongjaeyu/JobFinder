@@ -1,88 +1,138 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {% load static from staticfiles %}
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-        <title>Devlopor Job Requirements Analzer</title>
-    </head>
-    <body>
+<head>
+    {% load static from staticfiles %}
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <title>Developer Job Requirements Analyzer</title>
+</head>
+<body>
 
-        <header>
-            <div class="ui inverted vertical masthead center aligned segment">
-                <div class="ui text container">
-                    <h1 class="ui inverted header">Job Requirements Analzer</h1>
-                    <h3 class="ui inverted disabled header">We analyze the current job postings and inform you of the technology stacks that companies are looking for.</h3>
-                </div>
+<header>
+    <div class="ui center aligned segment">
+        <div class="ui text container">
+            <h1 class="ui inverted header">Job Requirements Analzer</h1>
+            <h3 class="ui inverted disabled header">We analyze the current job postings and inform you of the technology stacks that companies are looking for.</h3>
+        </div>
+    </div>
+</header>
+{% load tags %}
+<section>
+    <div class="ui centered grid">
+        <div class="eight wide column">
+            <div class="ui top attached tabular menu">
+                <a class="item" data-tab="first">Role</a>
+                <a class="item" data-tab="second">Skill</a>
             </div>
-        </header>
-        {% load tags %}
-        <section>
-            <div class="ui segment">
-                {% if keys %}
-                {% for key in keys %}
-                {% if forloop.counter|modulo:5 == 1 %}
-                <div id="col" class="ui five column grid container">
-                    <div class="column"><a href="{{ key }}/" class="massive ui button">{{ key }}</a></div>
-                {% else %}
-                    <div class="column"><a href="{{ key }}/" class="massive ui button">{{ key }}</a></div>
-                {% endif %}
-                {% if forloop.counter|modulo:5 == 0 %}
-                </div>
-                {% endif %}
-                {% endfor %}
-                {% endif %}
-                <div id="col5" class="ui five column grid container">
-                    <div id="nextbtn" class="ui buttons">
-                        <button class="ui button">Cancel</button>
-                        <div class="or"></div>
-                        <button class="ui positive button">Save</button>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="ui centered gird">
+        <div class="ui bottom attached tab active" data-tab="first">
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="백엔드/" class="massive ui button">백엔드</a></div>
+                <div class="column"><a href="프론트엔드/" class="massive ui button">프론트엔드</a></div>
+                <div class="column"><a href="풀스택/" class="massive ui button">풀스택</a></div>
+                <div class="column"><a href="안드로이드/" class="massive ui button">안드로이드</a></div>
             </div>
-        </section>
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="아이폰/" class="massive ui button">아이폰</a></div>
+                <div class="column"><a href="머신러닝/" class="massive ui button">머신러닝</a></div>
+                <div class="column"><a href="인공지능/" class="massive ui button">인공지능</a></div>
+                <div class="column"><a href="모바일 게임/" class="massive ui button">모바일 게임</a></div>
+            </div>
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="블록체인/" class="massive ui button">블록체인</a></div>
+            </div>
+        </div>
+        <div class="ui bottom attached tab" data-tab="second">
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="Django/" class="massive ui button">Django</a></div>
+                <div class="column"><a href="Spring/" class="massive ui button">Spring</a></div>
+                <div class="column"><a href="Go/" class="massive ui button">Go</a></div>
+                <div class="column"><a href="Android/" class="massive ui button">Android</a></div>
+            </div>
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="Swift/" class="massive ui button">Swift</a></div>
+                <div class="column"><a href="React/" class="massive ui button">React</a></div>
+                <div class="column"><a href="Vue/" class="massive ui button">Vue</a></div>
+                <div class="column"><a href="Angular/" class="massive ui button">Angular</a></div>
+            </div>
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="Flask/" class="massive ui button">Flask</a></div>
+                <div class="column"><a href="Ruby/" class="massive ui button">Ruby</a></div>
+                <div class="column"><a href="Node.js/" class="massive ui button">Node.js</a></div>
+                <div class="column"><a href=".NET/" class="massive ui button">.NET</a></div>
+            </div>
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="TensorFlow/" class="massive ui button">TensorFlow</a></div>
+                <div class="column"><a href="Hadoop/" class="massive ui button">Hadoop</a></div>
+                <div class="column"><a href="Unity/" class="massive ui button">Unity</a></div>
+                <div class="column"><a href="SQL/" class="massive ui button">SQL</a></div>
+            </div>
+            <div id="col" class="ui four column grid container">
+                <div class="column"><a href="NoSQL/" class="massive ui button">NoSQL</a></div>
+                <div class="column"><a href="AWS/" class="massive ui button">AWS</a></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    </body>
-    <script>
+</body>
+<script>
+    $('.menu .item')
+        .tab();
+</script>
+<style type="text/css">
+    body {
 
-    </script>
-    <style type="text/css">
-        body {
-
-        }
-        h1.ui.inverted.header {
-            margin-top: 5rem;
-        }
-        div div.ui.container {
-            margin-left: 1rem;
-            margin-right: 1rem;
-        }
-        body > header > div {
-            height: 20rem;
-        }
-        section div.ui.segment {
-            height: 50rem;
-        }
-        div .column {
-            padding: 0px;
-            text-align: center;
-        }
-        div .ui.five.column.grid.container {
-            margin-top: 2rem;
-        }
-        div #nextbtn {
-            margin-top: 10rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        a.massive.ui.button{
-            padding:1em;
-            text-align: center;
-            display:inline-block;
-            text-decoration: none !important;
-            margin:0 auto;
-            width: 100%;
-        }
-    </style>
+    }
+    h1.ui.inverted.header {
+        margin-top: 10rem;
+    }
+    div div.ui.container {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    div.ui.center.aligned.segment {
+        height: 30rem;
+        background-color: #343d46;
+    }
+    div .column {
+        padding: 0px;
+        height: 200px;
+        text-align: center;
+    }
+    div.eight.wide.column {
+        margin: auto auto auto auto;
+        height: 50px;
+    }
+    div .ui.four.column.grid.container {
+        margin: auto auto auto auto;
+    }
+    div.ui.centered.gird {
+        margin-top: 5rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    a.massive.ui.button{
+        text-align: center;
+        padding-top: 3em;
+        display:inline-block;
+        text-decoration: none !important;
+        margin:0 auto;
+        width: 100%;
+        height: 100%;
+        background-color:  #696969;
+    }
+    a.item {
+        width:50%;
+        text-align: center;
+        display:inline-block;
+        font-size: large;
+    }
+    .ui.tabular.menu {
+        background-color: #4f5b66;
+    }
+</style>
 </html>
