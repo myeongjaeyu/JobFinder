@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    {% block head %}{% endblock %}
+    <title>Developer Recruitment Notice Analyzer</title>
+</head>
+<body>
+
+<header>
+    <div class="ui center aligned segment">
+        <div class="ui text container">
+            <h1 class="ui inverted header">Recruitment Notice Analyzer</h1>
+            <h3 class="ui inverted disabled header">Analyzing current job openings for software engineers in Korea.</h3>
+        </div>
+    </div>
+</header>
+{% load tags %}
+<section>
+    {% block content %}{% endblock %}
+</section>
+</body>
+<style type="text/css">
+    h1.ui.inverted.header {
+        margin-top: 5rem;
+    }
+
+    div div.ui.container {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    div.ui.center.aligned.segment {
+        height: 20rem;
+        background-color: #343d46;
+    }
+
+    h1.ui.header {
+        font-size: 3rem;
+    }
+
+    h3.ui.header {
+        font-size: 1.5rem;
+    }
+</style>
+{% block js %}{% endblock %}
+{% block css %}{% endblock %}
+</html>

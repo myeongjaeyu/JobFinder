@@ -1,95 +1,101 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% load staticfiles %}
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <title>Devlopor Job Requirements Analzer</title>
-    </head>
-    <body>
+{% extends "Analyzer/base.html" %}
+{% block head %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock %}
+{% block content %}
+    {% load static %}
+    <div class="ui two column centered grid">
 
-        <header>
-            <div class="ui inverted vertical masthead center aligned segment">
-                <div class="ui text container">
-                    <h1 class="ui inverted header">Job Requirements Analzer</h1>
-                    <h3 class="ui inverted disabled header">We analyze the current job postings and inform you of the technology stacks that companies are looking for.</h3>
-                </div>
-            </div>
-        </header>
-
-        <section>
-            <div id="big_seg" class="ui segment">
+        <div class="head row">
+            <div class="eight wide column">
                 <h2 class="ui header">
-                        <i class="settings icon"></i>
-                        <div class="content">
-                            1. 자격 요건 통계
-                            <div class="sub header">N개 채용공고에서 추출된 X개의 자격 요건에 관한 단어 통계.</div>
+                    <img src="{% static 'skills1.png' %}" alt="">
+                    <div class="content">
+                        Essential skills
+                        <div class="sub header">
+                            Essential skills for today's {{ keyword }} developers<br>
+                            (Based on more than {{ count }} Recruitment Notice in {{ month }} {{ year }})
                         </div>
+                    </div>
                 </h2>
-                <div class="ui internally celled two column grid">
-                    <div class="column">
-                        {{ var_chart1|safe }}
-                    </div>
-                    <div class="column">
-                        <img id="word_cloud1" src="{{ word_cloud1 }}" alt="">
-                    </div>
-                </div>
-
-                <div class="ui divider"></div>
-
-                <h2 class="ui header">
-                        <i class="settings icon"></i>
-                        <div class="content">
-                            2. 우대 요건 통계
-                            <div class="sub header">N개 채용공고에서 추출된 X라인의 우대 요건에서 동시 출연한 단어 통계</div>
-                        </div>
-                </h2>
-                <div class="ui internally celled two column grid">
-                    <div class="column">
-                        {{ var_chart2|safe }}
-                    </div>
-                    <div class="column">
-                        <img id="word_cloud2" src="{{ word_cloud2 }}" alt="">
-                    </div>
-                </div>
-                <div class="ui divider"></div>
             </div>
-        </section>
+        </div>
 
-    </body>
+        <div class="row">
+            <div class="eight wide column">
+                <p>Var Chart : Indicates the number of words in the Recruitment Notice</p>
+                {{ var_chart1|safe }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="eight wide column">
+                <p>Word Cloud : Indicates the percentage of words in the Recruitment Notice</p>
+                <img id="word_cloud1" src="{{ word_cloud1 }}" alt="">
+            </div>
+        </div>
+
+
+        <div class="ui divider"></div>
+
+        <div class="head row">
+            <div class="eight wide column">
+                <h2 class="ui header">
+                    <img src="{% static 'skills2.png' %}" alt="">
+                    <div class="content">
+                        Preferential Skills
+                        <div class="sub header">
+                            Additional Benefits for {{ keyword }} Developers Today<br>
+                            (Based on more than {{ count }} Recruitment Notice in {{ month }} {{ year }})
+                        </div>
+                    </div>
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="eight wide column">
+                <p>Var Chart : Indicates the number of words in the Recruitment Notice</p>
+                {{ var_chart2|safe }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="eight wide column">
+                <p>Word Cloud : Indicates the percentage of words in the Recruitment Notice</p>
+                <img id="word_cloud2" src="{{ word_cloud2 }}" alt="">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
     <script>
-
     </script>
-    <style type="text/css">
-        body {
-
-        }
-        h1.ui.inverted.header {
-            margin-top: 5rem;
-        }
-        div div.ui.container {
-            margin-left: 1rem;
-            margin-right: 1rem;
-        }
-        body > header > div {
-            height: 20rem;
-        }
-        #table1 {
-            text-align: center;
-            margin: auto;
-        }
+{% endblock %}
+{% block css %}
+    <style>
         h2.ui.header {
-            margin-left: 5rem;
+            margin-top: 5rem;
+            margin-left: 10rem;
+            font-size: 3rem;
         }
-        img#word_cloud1 {
-            height:100%;
-            width:100%
+
+        h2.ui.header .sub.header {
+            font-size: 2rem;
         }
-        img#word_cloud2 {
-            height:100%;
-            width:100%
+
+        p {
+            margin-left: 1rem;
+            font-size: x-large;
+        }
+
+        div.head {
+            margin-top: 7rem;
+            margin-bottom: 2rem;
+        }
+
+        .ui.grid > .row > .column > img, .ui.grid > .row > img {
+            max-width: 80%;
         }
     </style>
-</html>
+{% endblock %}

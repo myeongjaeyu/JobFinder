@@ -1,38 +1,34 @@
-from selenium import webdriver
-from bs4 import BeautifulSoup
-import re
-import traceback
-from datetime import datetime
 import collections
-from nltk.corpus import stopwords
-import plotly.graph_objects as go
-import urllib.request
-import matplotlib
-import matplotlib.pyplot as plt
-import squarify
-from wordcloud import WordCloud
-import requests
 import datetime
-import os
-from pyvirtualdisplay import Display
-from selenium.webdriver.firefox.options import Options
+import re
+import urllib.request
+from datetime import datetime
 
+import requests
+from bs4 import BeautifulSoup
+from nltk.corpus import stopwords
+from selenium import webdriver
 
-driver_address = r'/home/ubuntu/Downloads/geckodriver'
+import graph
+from filter import filter
 
+# driver_address = r'/home/ubuntu/Downloads/geckodriver'
+driver_address = r'c:\chromedriver_win32\chromedriver.exe'
 
 def get_driver(url):
-    options = Options()
-    options.headless = True
-    driver = webdriver.Firefox(options=options, executable_path=driver_address)
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('lang=ko_KR')
+    driver = webdriver.Chrome(driver_address, chrome_options=options)
     driver.get(url)
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(2)
     return driver
 
 
 class JobOpening:
     def __init__(self, company_name, job_title, key_word, url):
-        self.date = datetime.today().strftime('%Y-%m-%d')
+        self.date = datetime.date.today().strftime('%Y-%m-%d')
         self.company_name = company_name
         self.job_title = job_title
         self.key_word = key_word
@@ -78,14 +74,13 @@ class Splitter:
             text = re.sub('[^a-zA-Z]', ' ', text).split(' ')
             [words.append(x) for x in text if len(x) > 1]
         stop_words = set(stopwords.words('english'))
-        print(words, end='\n')
         for i, a in enumerate(words):
             for b in words[i + 1:]:
                 if a.casefold() == b.casefold():
                     words[i] = b
             if a not in stop_words:
                 result.append(words[i])
-        print(result, end='\n')
+        result = filter(result)
         return result
 
     def get_words(self):
@@ -101,147 +96,13 @@ class Analyzer:
         self.counting_frequency()
 
     def counting_frequency(self):
-        self.statistics['qualifications'] = collections.Counter(self.texts['qualifications']).most_common(100)
-        self.statistics['preferential_treatment'] = collections.Counter(self.texts['preferential_treatment']).most_common(100)
+        self.statistics['qualifications'] = collections.Counter(self.texts['qualifications']).most_common()
+        self.statistics['preferential_treatment'] = collections.Counter(
+            self.texts['preferential_treatment']).most_common()
         return self.statistics
 
 
-class KeyWordData:
-    def __init__(self, job_opening_list):
-        self.job_opening_list = job_opening_list
-        self.splited_words = Splitter(self.job_opening_list).get_words()  # 문자열 리스트를 단어 리스트로 반환
-        self.statistics = Analyzer(self.splited_words).counting_frequency()  # 단어 리스트를 통계로 반환
-        """
-        self.draw_var_chart(self.statistics['qualifications'][:30])
-        self.draw_var_chart(self.statistics['preferential_treatment'][:30])
-        self.draw_treemap(self.statistics['qualifications'][:30])
-        self.draw_treemap(self.statistics['preferential_treatment'][:30])
-        self.word_cloud(self.splited_words['qualifications'])
-        self.word_cloud(self.splited_words['preferential_treatment'])
-        """
-
-    def draw_var_chart(self, data):
-        x = list()
-        y = list()
-        width = list()
-        for key, value in data:
-            x.insert(0, value)
-            y.insert(0, key)
-        fig = go.Figure()
-        fig.add_trace(go.Bar(
-            x=x,
-            y=y,
-            text=x,
-            textposition='outside',
-            orientation='h',
-            marker_color='#696969',
-        ))
-        fig.update_layout(
-            autosize=False,
-            height=1200,
-            width=800,
-            font=dict(
-                size=14
-            )
-        )
-        fig.update_xaxes(automargin=True)
-        fig.update_yaxes(automargin=True)
-        fig.show()
-
-    def word_cloud(self, data):
-        wordcloud = WordCloud(
-            max_font_size=100,
-            background_color="white",
-            width=1200,
-            height=800,
-            colormap=matplotlib.cm.RdYlGn
-        )
-        wordcloud = wordcloud.generate(' '.join(data))
-
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis('off')
-        plt.show()
-
-    def draw_treemap(self, data):
-        fig = go.Figure()
-        keys = list()
-        values = list()
-        for key, value in data:
-            values.insert(0, value)
-            keys.insert(0, key)
-
-        x = 0.
-        y = 0.
-        width = 100.
-        height = 100.
-
-        normed = squarify.normalize_sizes(values, width, height)
-        rects = squarify.squarify(normed, x, y, width, height)
-
-        # Choose colors from http://colorbrewer2.org/ under "Export"
-        color_brewer = ['#42926b', '#394b41', '#9cb0a4', ' #1d1d35',
-                        '#0e8dbe', '#005b88', '#3784e1', '#cf634d'] * 10
-        shapes = []
-        annotations = []
-        counter = 0
-
-        for r, key, val, color in zip(rects, keys, values, color_brewer):
-            shapes.append(
-                dict(
-                    type='rect',
-                    x0=r['x'],
-                    y0=r['y'],
-                    x1=r['x'] + r['dx'],
-                    y1=r['y'] + r['dy'],
-                    line=dict(width=2),
-                    fillcolor=color
-                )
-            )
-            annotations.append(
-                dict(
-                    x=r['x'] + (r['dx'] / 2),
-                    y=r['y'] + (r['dy'] / 2),
-                    text=key,
-                    showarrow=False
-                )
-            )
-
-        # For hover text
-        fig.add_trace(go.Scatter(
-            x=[r['x'] + (r['dx'] / 2) for r in rects],
-            y=[r['y'] + (r['dy'] / 2) for r in rects],
-            text=[str(v) for v in keys],
-            mode='lines+markers+text',
-        ))
-
-        fig.update_layout(
-            height=700,
-            width=700,
-            xaxis=dict(showgrid=False, zeroline=False),
-            yaxis=dict(showgrid=False, zeroline=False),
-            shapes=shapes,
-            annotations=annotations,
-            hovermode='closest'
-        )
-
-        fig.show()
-
-
-class JobInfoSite:
-    def __init__(self, keyword):
-        pass
-
-    def search(self):
-        pass
-
-    def get_general_info(self):
-        pass
-
-    def get_requirements(self):
-        pass
-
-
-class RoketPunch(JobInfoSite):
+class RoketPunch():
     def __init__(self, keyword):
         self.keyword = keyword
         self.url = 'https://www.rocketpunch.com/jobs?keywords=' + self.keyword
@@ -277,7 +138,7 @@ class RoketPunch(JobInfoSite):
             job_title = soup.find('a', class_='job-title').getText()  # 공고 제목 찾기
             url = 'https://www.rocketpunch.com' + soup.find('a', class_='job-title')['href']  # 공고 url 찾기
             self.job_opening_list.append(JobOpening(name, job_title, self.keyword, url))  # 공고 객체를 만들어서 정보 저장
-        print(len(self.job_opening_list))
+        # print(len(self.job_opening_list))
         return self.job_opening_list  # 공고 객체 리스트 반환
 
     def get_requirements(self):
@@ -287,37 +148,66 @@ class RoketPunch(JobInfoSite):
             html = urllib.request.urlopen(job_opening.url).read().decode("utf-8")  # 공고 접속
             html = BeautifulSoup(html, "html.parser")  # 채용상세를 bs4객체화
             try:
-                html = html.find(text=re.compile('자격|필수|Qualifications|이런 분을|Requirement|선호하는 인재상|지원요건|Who You Are'))\
+                html = html.find(text=re.compile('자격|필수|Qualifications|이런 분을|Requirement|선호하는 인재상|지원요건|Who You Are')) \
                     .parent.prettify()  # 채용 상세에서 '자격'의 부모 찾기
                 html = BeautifulSoup(html, "lxml").text.split('\n')
                 words = [x for x in html if len(x.strip()) > 0]  # 찾은 텍스트를 리스트로
                 job_opening.save_data(words)  # 해당 채용공고에 저장
             except:
-                print(job_opening.company_name, job_opening.url, sep='\n')
-                traceback.print_exc()
+                # print(job_opening.company_name, job_opening.url, sep='\n')
+                # traceback.print_exc()
                 delete.append(job_opening)      # 자격, 필수 둘다 못찾으면 삭제 목록에 추가
         for i in delete:
             self.job_opening_list.remove(i)  # 삭제
         return self.job_opening_list  # 채용 공고 리스트 반환
 
 
+def deduplication(job_opening_list):
+    checker = dict()
+    tmp = list()
+    for job in job_opening_list:
+        try:
+            if checker[job.url]:
+                continue
+        except:
+            checker[job.url] = True
+            tmp.append(job)
+            continue
+    return tmp
+
+
 def init():
-    keylist = [
-            'Django', 'Spring', 'Go', 'Android', 'Swift',
-            'React', 'Vue', 'Angular', 'Flask', 'Ruby',
-            'Node.js', '.NET', 'TensorFlow', 'Hadoop', 'Unreal Engine',
-            'CryEngine', 'Unity', 'SQL', 'NoSQL', 'AWS',
-            '백엔드', '프론트엔드', '풀스택', '안드로이드','아이폰',
-            '머신러닝', '인공지능', '데이터 엔지니어', '모바일 게임', '게임 클라이언트',
-            '게임 서버', '네트워크', '시스템', '인터넷 보안', 'QA',
-            '사물인터넷', '응용프로그램', '블록체인']
+    keylist = [('모바일 게임', 'Mobile Game'),
+               ('백엔드', 'Backend'), ('프론트엔드', 'Frontend'), ('풀스택', 'Fullstack'),
+               ('안드로이드', 'Android'), ('아이폰', 'Iphone'),
+               ('머신러닝', 'Machine learning'), ('인공지능', 'AI'), ('데이터 엔지니어', 'Data Engineer'),
+               ('게임 클라이언트', 'Game Client'),
+               ('게임 서버', 'Game Servser'), ('네트워크', 'Network'), ('시스템', 'System'), ('보안', 'Security'), 'QA',
+               ('사물인터넷', 'IoT'), ('응용프로그램', 'Application'), ('블록체인', 'Blockchain'),
+               'Django', 'Spring', 'Go', 'Android', 'Swift',
+               'React', 'Vue', 'Angular', 'Flask', 'Ruby',
+               'Node', 'NET', 'TensorFlow', 'Hadoop', 'Unreal',
+               'Cry', 'Unity', 'SQL', 'NoSQL', 'AWS',
+               ]
     for key in keylist:
-        rp = RoketPunch(key)
-        words = KeyWordData(rp.job_opening_list).splited_words
+        if type(key) == tuple:
+            rp = RoketPunch(key[0])
+            rp2 = RoketPunch(key[1])
+            rp.job_opening_list += rp2.job_opening_list
+            rp.job_opening_list = list(dict.fromkeys(rp.job_opening_list))
+            key = key[1].replace(" ", "")
+        else:
+            rp = RoketPunch(key)
+        rp.job_opening_list = deduplication(rp.job_opening_list)
+        count = len(rp.job_opening_list)
+        if count < 20:
+            continue
+        print(key, count)
+        words = Splitter(rp.job_opening_list).get_words()
         wq = words['qualifications']
         pt = words['preferential_treatment']
-        count = len(rp.job_opening_list)
-        requests.post('http://0:8080/API/', json=
+
+        requests.post('http://127.0.0.1:8000/API/', json=
         {
             "count": count,
             "keyword": key,
@@ -326,8 +216,8 @@ def init():
         },
                       auth=('ymj', '66859060')
                       )
-        url1 = os.getcwd() + '/assets/' + str(datetime.date.today)[:-3] + key + '1.png'
-        url2 = os.getcwd() + '/assets/' + str(datetime.date.today)[:-3] + key + '2.png'
+        url1 = '/assets/' + str(datetime.date.today())[:-3] + key + '1.png'
+        url2 = '/assets/' + str(datetime.date.today())[:-3] + key + '2.png'
         graph.word_cloud(wq, url1)
         graph.word_cloud(pt, url2)
 
