@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.staticfiles.storage import staticfiles_storage
 import os
 import graph
-
+import datetime
 
 @csrf_exempt
 def index(request):
@@ -29,8 +29,12 @@ def results(request, keyword):
         graph.word_cloud(data.qualifications_words, url1)
     if not os.path.exists(os.getcwd() + url2):
         graph.word_cloud(data.preferential_treatment_words, url2)
+    mydate = data.date
     context = {'var_chart1': var_chart1, 'var_chart2': var_chart2,
-               'word_cloud1': url1, 'word_cloud2': url2}
+               'word_cloud1': url1, 'word_cloud2': url2,
+               'keyword': keyword, 'month': str(mydate.strftime("%B")),
+               'year': str(mydate.strftime("%Y")), 'count': data.count
+               }
     return render(request, 'Analyzer/results.html', context)
 
 

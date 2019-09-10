@@ -39,9 +39,9 @@ SECRET_KEY = get_secret('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'ec2-54-180-114-225.ap-northeast-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['localhost', 'ec2-54-180-114-225.ap-northeast-2.compute.amazonaws.com', '*']
 
 
 # Application definition
@@ -142,7 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/assets/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
 STATICFILES_DIRS = (
-    # os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'assets'),
 )
