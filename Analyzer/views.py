@@ -1,6 +1,5 @@
 import datetime
 import os
-
 import requests
 from celery.schedules import crontab
 from celery.task import periodic_task
@@ -8,7 +7,6 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
-
 import Analyzer
 import Crawler
 import graph
@@ -48,7 +46,7 @@ def results(request, keyword):
     context = {'var_chart1': var_chart1, 'var_chart2': var_chart2,
                'word_cloud1': url1, 'word_cloud2': url2,
                'keyword': keyword, 'month': str(today.strftime("%B")),
-               'year': str(today.strftime("%Y")), 'count': data.count
+               'year': str(today.strftime("%Y")), 'count': data.get().count
                }
     return render(request, 'Analyzer/results.html', context)
 

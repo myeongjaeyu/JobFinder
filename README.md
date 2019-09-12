@@ -1,20 +1,22 @@
-# JobRequirementsAnalyzer
+# Recruitment Notice Analyzer
 - 웹에서 채용공고를 수집하여 <자격 요건>과 <우대 사항> 등을 분석하여 그래프로 제공하는 서비스입니다.  
 
 <br>
 
 ## 개발 동기
-최근 취업 포트폴리오로 사용할 개인 프로젝트를 하려고 마음먹었습니다. 그런데 <br>
 
-> 어떤 언어(기술)을 사용해야 취업에 도움이 될까 ?
+최근 취업 포트폴리오로 사용할 개인 프로젝트를 하려고 마음먹고 프로젝트 기획 도중<br>
 
-와 같은 고민을 하게되었고, 고민 도중 채용 공고에 보면 <필수 요건> 혹은 <br>
-<우대 요건> 같은 부분이 있다는걸 생각해냈습니다. <br>  
-채용 정보 사이트에서 많이 찾고 있는 기술들을 사용하기로 마음먹고 정보를 모으기 시작했습니다.<br>
+> 어떤 언어(기술)을 사용하는게 취업에 가장 도움이 될까 ?
+
+와 같은 고민을 하게되었고, 고민 도중 채용 공고에 보면 <필수 요건> 혹은
+
+<우대 요건> 같은 부분이 있다는걸 생각해냈습니다.
+
+채용 정보 사이트에서 많이 찾고 있는 기술들을 사용하기로 마음먹고 정보를 모으기 시작했습니다.
 
 ![채용공고 확대](https://user-images.githubusercontent.com/44807859/64788805-2eefbd00-d5ae-11e9-97e4-8cee68e43644.png)
 
-<br>
 엑셀을 이용해 채용공고를 10개쯤 수집했을 때.
 
 > 내가 개발자(지망생)인데, 이걸 일일히 복사 붙여넣기를 하고 있어야 하나 ? 
@@ -37,9 +39,9 @@ Selenium, Beautiful Soup과 같은 강력한 라이브러리들이 있어서
 
 ![postgresql](https://user-images.githubusercontent.com/44807859/64786324-28ab1200-d5a9-11e9-9aaa-d283f9fa0ed7.png)
 
-- postgresql :
+- PostgreSQL :
 *two scoops of django* 와 같은 Django 관력 서적과 스택오버플로우 등에서 
-Django와 같이 사용하기 좋은 RDBS로 postgresql을 많이 뽑고 있습니다.
+Django와 같이 사용하기 좋은 RDBS로 PostgreSQL 많이 뽑고 있습니다.
 
 ![AWS EC2](https://user-images.githubusercontent.com/44807859/64786336-2cd72f80-d5a9-11e9-8f41-62b8413660b1.png)
 
