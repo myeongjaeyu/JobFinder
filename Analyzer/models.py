@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.db import models
 
 
 class KeywordData(models.Model):
@@ -9,4 +9,5 @@ class KeywordData(models.Model):
     qualifications_words = ArrayField(models.CharField(max_length=50), null=True)
     preferential_treatment_words = ArrayField(models.CharField(max_length=50), null=True)
 
-# Create your models here.
+    class Meta:
+        unique_together = (("date", "keyword"),)

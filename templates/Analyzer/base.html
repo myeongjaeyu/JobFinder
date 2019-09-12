@@ -2,6 +2,8 @@
 <html lang="ko">
 <head>
     {% load static %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-147713439-1"></script>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -48,6 +50,17 @@
         font-size: 1.5rem;
     }
 </style>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-147713439-1');
+</script>
 {% block js %}{% endblock %}
 {% block css %}{% endblock %}
 </html>

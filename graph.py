@@ -46,6 +46,7 @@ def draw_var_chart(data):
     plot_div = plot(figure, output_type='div', include_plotlyjs=False)
     return plot_div
 
+
 def word_cloud(data, save):
     wordcloud = WordCloud(
         max_font_size=500,
