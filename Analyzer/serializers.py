@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import KeywordData
-from django.contrib.auth.models import User
 
 
 class KeywordDataSerilalizer(serializers.HyperlinkedModelSerializer):

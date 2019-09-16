@@ -67,7 +67,7 @@ def every_two_weeks():
         'Cry', 'Unity', 'SQL', 'NoSQL', 'AWS',
     ]
     for key in keylist:
-        if type(key) == tuple:
+        if isinstance(key, tuple):
             rp = Crawler.RocketPunch(key[0])
             rp2 = Crawler.RocketPunch(key[1])
             rp.job_opening_list += rp2.job_opening_list
