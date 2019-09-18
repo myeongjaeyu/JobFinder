@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import json
 import os
-
 from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -40,7 +39,7 @@ SECRET_KEY = get_secret('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'ec2-13-209-3-203.ap-northeast-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['www.recruitmentnoticeanalyzer.info']
 
 
 # Application definition
