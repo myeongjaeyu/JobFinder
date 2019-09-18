@@ -19,7 +19,7 @@
 
 엑셀을 이용해 채용공고를 10개쯤 수집했을 때.
 
-> 내가 개발자인데, 이걸 일일히 복사 붙여넣기를 하고 있어야 하나 ? 
+> 내가 개발자인데, 이걸 일일이 복사 붙여넣기를 하고 있어야 하나 ? 
 
 라는 생각이 들었고, 채용공고를 수집해서 통계를 내주는 웹앱을 만들기로 결정했습니다.
 
@@ -41,7 +41,7 @@ Selenium, Beautiful Soup과 같은 강력한 라이브러리들이 있어서
 
 - PostgreSQL :
 *two scoops of django* 와 같은 Django 관력 서적과 스택오버플로우 등에서 
-Django와 같이 사용하기 좋은 RDBS로 PostgreSQL 많이 뽑고 있습니다.
+Django와 같이 사용하기 좋은 RDBMS로 PostgreSQL 많이 뽑고 있습니다.
 
 ![AWS EC2](https://user-images.githubusercontent.com/44807859/64786336-2cd72f80-d5a9-11e9-8f41-62b8413660b1.png)
 
@@ -113,7 +113,7 @@ AWS EC2를 선택한 것과 같이 컴퓨터를 계속 켜둘 수 없고 채용 
 
 ## RESTful API ?
 
-- 프로젝트를 완성하고 테스트를 하던 도중 Backend와 Django 키워드에서 'RESTful' 이라는 단어가 엄청나게 높은 빈도수를 기록하는 것을 발견하였습니다.
+- 프로젝트를 완성하고 테스트를 하던 도중 Backend와 Django 키워드에서 'RESTful' 이라는 단어가 높은 빈도수를 기록하는 것을 발견하였습니다.
 
 - 인터넷에서 RESTful API에 대한 정의를 검색하여 읽어봤지만 감이 안오던 도중 Django에는 RESTful API를 쉽게 구성할 수 있도록 해주는 django rest framework라는 것이 있다는걸 알게되었습니다.
 
@@ -122,5 +122,5 @@ AWS EC2를 선택한 것과 같이 컴퓨터를 계속 켜둘 수 없고 채용 
 ![API1](https://user-images.githubusercontent.com/44807859/64798219-9b25ed00-d5bd-11e9-9d55-b1efd443f26f.PNG)
 
 - django rest framework를 이용하여 실제로 구현해보니 그 위력을 알게되었습니다.
-- DB에 연결하지도 않았는데, 이런 간단한 코드만으로 데이터를 주고받을수있다니 ! 
+- DB에 연결하지도 않았는데, 이런 간단한 코드만으로 데이터를 주고받을수있다니 !
 # END
