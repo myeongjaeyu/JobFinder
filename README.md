@@ -117,9 +117,8 @@ AWS EC2를 선택한 것과 같이 컴퓨터를 계속 켜둘 수 없고 채용 
 
 ![API1](https://user-images.githubusercontent.com/44807859/64798219-9b25ed00-d5bd-11e9-9d55-b1efd443f26f.PNG)
 
-![API2](https://user-images.githubusercontent.com/44807859/64798220-9b25ed00-d5bd-11e9-854d-7af8247bbc99.PNG)
-
 - django rest framework를 이용하여 실제로 구현해보니 그 위력을 알게되었습니다.
 - DB에 연결하지도 않았는데, 이런 간단한 코드만으로 데이터를 주고받을수있다니 ! 
 - 이걸 진작에 알았으면 좋았을텐데.. 라는 생각이 들었습니다. 제가 모르는 이런 기술들이 얼마나 많을지 기대가 됩니다.
+- 
 # END
