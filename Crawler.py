@@ -2,12 +2,15 @@ import datetime
 import re
 import urllib.request
 from datetime import datetime
-
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
 driver_address = r'c:\chromedriver_win32\chromedriver.exe'
-
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+options.add_argument('--disable-gpu')
+options.add_argument('lang=ko_KR')
+driver = webdriver.Chrome(driver_address, chrome_options=options)
 
 def get_driver(url):
     """
@@ -15,17 +18,13 @@ def get_driver(url):
     :param url:
     :return: driver
     """
-    options = webdriver.ChromeOptions()
-    options.add_argument('headless')
-    options.add_argument('--disable-gpu')
-    options.add_argument('lang=ko_KR')
-    driver = webdriver.Chrome(driver_address, chrome_options=options)
     driver.get(url)
     driver.implicitly_wait(2)
     return driver
 
 
 class JobOpening:
+    # 채용공고 객체
     def __init__(self, company_name, job_title, key_word, url):
         self.date = datetime.date.today().strftime('%Y-%m-%d')
         self.company_name = company_name
@@ -40,6 +39,7 @@ class JobOpening:
 
 
 class RocketPunch:
+    # 로켓펀치 사이트 객체
     def __init__(self, keyword):
         self.keyword = keyword
         self.url = 'https://www.rocketpunch.com/jobs?keywords=' + self.keyword
@@ -51,10 +51,13 @@ class RocketPunch:
         self.get_requirements()
 
     def search(self):
-        # 키워드를 입력받아 로켓펀치를 검색한 후 HTML 데이터를 리턴하는 함수
+        """
+        키워드를 입력받아 로켓펀치를 검색한 후 HTML 데이터를 저장하는 함수
+        :return:
+        """
         try:
             pages = int(self.driver.find_element_by_class_name('tablet.computer.large.screen.widescreen.only') \
-                        .find_elements_by_tag_name('a')[-1].text)  # 검색결과 페이지 수
+                        .find_elements_by_tag_name('a')[-1].text)  # 검색결과 페이지 수 확인
             for i in range(1, pages + 1):  # 페이지 수 만큼 반복
                 self.driver.get(self.url + '&page=' + str(i))  # 각 페이지를 돌면서
                 openings = self.driver.find_elements_by_class_name('company.item')  # 해당 페이지의 공고 리스트 수집
@@ -68,7 +71,10 @@ class RocketPunch:
         return self.html_list  # 공고 정보 리스트 반환
 
     def get_general_info(self):
-        # HTML 리스트를 입력받아 그 안에서 회사명, 공고명, 공고URL 등을 추출하여 리턴하는 함수
+        """
+        HTML 리스트를 입력받아 그 안에서 회사명, 공고명, 채용 공고 URL 등을 추출하여 리턴하는 함수
+        :return:
+        """
         for html in self.html_list:  # 저장한 공고 정보 리스트 순회
             soup = BeautifulSoup(html, "html.parser")  # html을 bs4 객체로 변환
             name = soup.find('strong').getText()  # 회사 이름 찾기
@@ -79,7 +85,10 @@ class RocketPunch:
         return self.job_opening_list  # 공고 객체 리스트 반환
 
     def get_requirements(self):
-        # 채용공고 오브젝트를 입력받아 해당 URL로 접속한 후 자격요건등이 포함된 텍스트 뭉치를 저장하고 반환하는 함수
+        """
+        채용공고 오브젝트를 입력받아 해당 URL로 접속한 후 자격요건등이 포함된 텍스트 뭉치를 저장하고 반환하는 함수
+        :return:
+        """
         delete = list()  # 지워야 할 공고들을 저장하는 리스트
         for job_opening in self.job_opening_list:  # 공고 리스트 순회
             html = urllib.request.urlopen(job_opening.url).read().decode("utf-8")  # 공고 접속

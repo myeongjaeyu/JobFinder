@@ -1,6 +1,5 @@
 import collections
 import os
-
 import matplotlib
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
@@ -8,12 +7,8 @@ from plotly.offline import plot
 from wordcloud import WordCloud
 
 
-def counting_frequency(data):
-    counted_words = collections.Counter(data).most_common()
-    return counted_words
-
-
 def draw_var_chart(data):
+    data = collections.Counter(data).most_common(30)
     x = list()
     y = list()
     for key, value in data:

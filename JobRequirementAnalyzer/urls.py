@@ -15,10 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.conf.urls import url
 from Analyzer import views
 from rest_framework import routers
-from rest_framework_swagger.views import get_swagger_view
 
 
 router = routers.DefaultRouter()
@@ -26,9 +24,9 @@ router.register(r'', views.KeywordDataViewSet)
 
 
 urlpatterns = [
+    path('', views.index),
+    path('<slug:keyword>/', views.results, name='results'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
     path('API/', include(router.urls)),
-    path('', views.index),
-    path('<slug:keyword>/', views.results, name='results'),
 ]

@@ -39,7 +39,7 @@ SECRET_KEY = get_secret('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.recruitmentnoticeanalyzer.info']
+ALLOWED_HOSTS = ['*', 'www.recruitmentnoticeanalyzer.info']
 
 
 # Application definition
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Analyzer',
     'rest_framework',
-    'rest_framework_swagger',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +122,13 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+
+
+CRONJOBS = [
+    ('0 0 15 * *', 'Analyzer.tasks.every_month')
+]
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -140,7 +147,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/assets/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
