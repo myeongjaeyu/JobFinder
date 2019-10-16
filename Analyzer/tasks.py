@@ -3,7 +3,7 @@ import Crawler
 
 def every_month():
     """
-        매달 15일에 Crawler, Analyser, graph 모듈을 사용하여 비즈니스 로직을 수행하고 데이터와
+        매달 1일에 Crawler, Analyser, graph 모듈을 사용하여 비즈니스 로직을 수행하고 데이터와
         워드 클라우드 이미지를 저장하는 함수.
         :return:
         """

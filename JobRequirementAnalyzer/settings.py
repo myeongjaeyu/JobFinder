@@ -125,7 +125,7 @@ REST_FRAMEWORK = {
 
 
 CRONJOBS = [
-    ('0 0 15 * *', 'Analyzer.tasks.every_month')
+    ('0 0 1 * *', 'Analyzer.tasks.every_month')
 ]
 
 
