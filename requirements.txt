@@ -16,7 +16,7 @@ coreschema==0.0.4
 crontab==0.22.6
 cycler==0.10.0
 cytoolz==0.10.0
-Django==2.2.5
+Django==2.2.13
 django-rest-swagger==2.2.0
 djangorestframework==3.10.3
 docutils==0.15.2
